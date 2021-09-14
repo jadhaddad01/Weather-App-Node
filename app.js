@@ -2,12 +2,27 @@ const request = require("request");
 const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 
-geocode('boston', (error, data) => {
-    console.log('Error', error);
-    console.log('Data', data);
+const input = process.argv
+if (input.length != 3) { // 2 = no inputs more than 3 = more than 1 input
+    console.log('Please input one location');
+    process.exit() // quit
+}
 
-    forecast(data.latitude, data.longitude, (error, data) => {
-        console.log('Error', error);
-        console.log('Data', data);
+// else run program
+geocode(input[2], (error, data) => {
+    if (error) {
+        return console.log(error);
+    }
+
+    forecast(data.latitude, data.longitude, (error, forecastData) => {
+        if (error) {
+            return console.log(error);
+        }
+
+        console.log(data.location);
+        console.log('Data', forecastData);
+
     })
+
+
 })
