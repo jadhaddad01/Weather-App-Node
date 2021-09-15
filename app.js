@@ -9,17 +9,17 @@ if (input.length != 3) { // 2 = no inputs more than 3 = more than 1 input
 }
 
 // else run program
-geocode(input[2], (error, data) => {
+geocode(input[2], (error, { latitude, longitude, location } = {}) => { // default {} undefined if error
     if (error) {
         return console.log(error);
     }
 
-    forecast(data.latitude, data.longitude, (error, forecastData) => {
+    forecast(latitude, longitude, (error, forecastData) => {
         if (error) {
             return console.log(error);
         }
 
-        console.log(data.location);
+        console.log(location);
         console.log('Data', forecastData);
 
     })
